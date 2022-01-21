@@ -1,0 +1,28 @@
+caption: Indexer
+created: 20220106214308574
+list-after: $:/core/ui/ControlPanel/Settings/TiddlyWiki
+modified: 20220121132437062
+tags: $:/tags/ControlPanel/SettingsTab $:/tags/MoreSideBar
+title: $:/plugins/kookma/indexer/ui/ControlPanel/Settings
+type: text/vnd.tiddlywiki
+
+These settings let you customise the behaviour of Search in Fields plugin.
+
+---
+
+;Show Indexer setting in more sidebar
+:<$checkbox tiddler="$:/plugins/kookma/indexer/ui/ControlPanel/Settings" tag="$:/tags/MoreSideBar"> Show setting in more sidebar</$checkbox>
+
+; Display Subject Index
+:<$checkbox tiddler="$:/plugins/kookma/indexer/ui/subject-index" tag="$:/tags/AdvancedSearch"> Enable Subject Index in $:/AdvancedSearch</$checkbox>
+:<$checkbox tiddler="$:/plugins/kookma/indexer/ui/subject-index" tag="$:/tags/SideBar"> Enable Subject Index in Sidebar</$checkbox>
+
+
+; Enable live preview
+:<$checkbox tiddler="$:/config/Indexer/live-preview" field="text" checked="yes"> Enable live raw text preview</$checkbox>
+:<$checkbox tiddler="$:/config/Indexer/live-preview" field="info" checked="yes"> Enable more information</$checkbox>
+
+;List of index entries (categories)
+:<$list 
+   filter="[all[tiddlers+shadows]tag[$:/tags/Indexer/Entries]]"
+   template="$:/core/ui/ListItemTemplate" />

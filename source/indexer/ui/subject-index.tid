@@ -1,0 +1,19 @@
+caption: Subject Index
+created: 20220121103605827
+modified: 20220121133633788
+tags: $:/tags/SideBar $:/tags/AdvancedSearch
+title: $:/plugins/kookma/indexer/ui/subject-index
+type: text/vnd.tiddlywiki
+
+\import [[$:/plugins/kookma/indexer/macros/index]]
+<$tiddler tiddler="$:/plugins/kookma/indexer/ui/subject-index" >
+<$macrocall 
+  $name="wiki-indexer" 
+	fields="title, tags, caption, text"
+	indexEntries="$:/indexer/data/subject"
+/>
+</$tiddler>
+
+<small>
+[[Edit index entries|$:/plugins/kookma/indexer/ui/subject-entries]]
+</small>

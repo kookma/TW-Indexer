@@ -1,0 +1,44 @@
+/* ui/add-entries */
+.kk-indexer-edit {
+	width:100%;
+	resize:vertical;
+	font-family:monospace;
+}
+
+/* ui/index */
+
+.kk-indexer-container {
+	display: grid;
+	grid-template-columns: 3em 1fr;
+	grid-gap: 1em;
+	align-items: baseline;
+}
+
+.kk-indexer-container aside {
+	border-right: 1px solid #999;
+	padding-left:5px;
+}
+/* make aside stick at top */
+.kk-indexer-container aside{
+  position: sticky;
+  top: 2rem;
+}
+
+/* button ui/index */
+.kk-indexer-btn{
+	cursor:pointer;
+	width:2em;
+	height:1.5em;
+	color:navy;	
+}
+
+/* definition list ui/index */
+.kk-indexer-list{
+	margin-top:0;
+}
+.kk-indexer-list dt{
+	margin-top:0;
+}
+.kk-indexer-list dd{
+	margin-left:20px;
+}

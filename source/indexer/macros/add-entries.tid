@@ -1,0 +1,88 @@
+created: 20220121050157198
+hide-body: yes
+modified: 20220121124924633
+tags: show-content
+title: $:/plugins/kookma/indexer/macros/add-entries
+type: text/vnd.tiddlywiki
+
+\define indexBaseTid()  $:/indexer/data/$(currentTiddler)$
+\define tempSelectTid() $:/temp/indexer/$(currentTiddler)$
+\define alphabet()      ABCDEFGHIJKLMNOPQRSTUVWXYZ
+
+\define loadEntries() 
+<!-- load the selected index-entries tiddler into tempSelectTid -->
+<$vars letter={{{ [<tempSelectTid>get[letter]] :else[[A]] }}} >
+
+<$list filter="[<letter>!match[*all]]" variable=ignore><!-- load entries per specified letter -->
+<$action-setfield 
+    $tiddler=<<tempSelectTid>> 
+		text= {{{ [<indexBaseTid>get[text]enlist-input[]] :filter[prefix<letter>] +[format:titlelist[]join[ ]]}}}
+/>
+</$list>
+
+<$list filter="[<letter>match[*all]]" variable=ignore><!-- load all entries at once -->
+<$action-setfield 
+    $tiddler=<<tempSelectTid>> 
+		text= {{{ [<indexBaseTid>get[text]] }}}
+/>
+</$list>
+
+</$vars>
+\end
+
+\define saveAction()
+<!-- save back to the selected index-entries tiddler from tempSelectTid -->
+
+<$list filter="[<indexBaseTid>!is[tiddler]]" variable=ignore><!-- create the index-entries tiddler if not existed -->
+    <$action-setfield $tiddler =<<indexBaseTid>> type="text/plain" tags="$:/tags/Indexer/Entries"/>
+</$list>
+
+<$list filter="[<targetLetter>!match[*all]]" variable=ignore><!-- save entries per specified letter -->
+<$action-setfield 
+    $tiddler = <<indexBaseTid>>
+    text     = {{{ [<tempSelectTid>get[text]enlist-input[]sentencecase[]prefix<targetLetter>] [<indexBaseTid>get[text]enlist-input[]!prefix<targetLetter>] +[sort[title]format:titlelist[]unique[]join[ ]] }}}
+/>
+</$list>
+
+<$list filter="[<targetLetter>match[*all]]" variable=ignore><!-- save all entries at once -->
+<$action-setfield 
+    $tiddler = <<indexBaseTid>>
+    text     = {{{ [<tempSelectTid>get[text]enlist-input[]sentencecase[]] +[sort[title]format:titlelist[]unique[]join[ ]] }}}
+/>
+</$list>
+
+<<loadEntries>> <!-- reload saved entries -->
+\end
+
+\define bracket() [
+
+\define validateEntries()
+<!-- warn user about invalid entries -->
+<$list filter="[<tempSelectTid>get[text]enlist-input[]] :filter[split[]first[]sentencecase[]!match<targetLetter>!match<bracket>] +[join[, ]] :filter[<targetLetter>!match[*all]]">
+
+''Invalid entries'': //<$text text=<<currentTiddler>>/>//<br>
+
+''Warning'': The current index selected is for words beginning with the letter <b><$text text=<<targetLetter>> /></b>. Use double brackets for compound phrases (which have spaces). Entries started with other letters are invalid and will not be saved!
+</$list>
+\end
+
+
+<!-- create the UI -->
+
+<$select tiddler=<<tempSelectTid>> field=letter default="A" actions=<<loadEntries>> >
+<$list filter="[<alphabet>split[]enlist-input[]] *all">
+<option><$text text=<<currentTiddler>> /></option>
+</$list>
+</$select> <small>Choose a letter or all at once</small>
+
+<!-- create the editor -->
+<$let targetLetter   = {{{ [<tempSelectTid>get[letter]] :else[[A]] }}} 
+      defaultEntries = {{{ [<indexBaseTid>get[text]enlist-input[]prefix<targetLetter>format:titlelist[]join[ ]] }}}
+>
+
+<$edit-text tiddler=<<tempSelectTid>> field=text default=<<defaultEntries>>    placeholder="" class="kk-indexer-edit"/>
+<$button actions=<<saveAction>> > Save</$button>
+
+<!-- live checking the entered words, phrases -->
+<<validateEntries>>
+</$let>

@@ -1,0 +1,14 @@
+created: 20220121085704968
+modified: 20220121122441528
+tags: 
+title: $:/plugins/kookma/indexer/readme
+type: text/vnd.tiddlywiki
+
+; Indexer
+Create subject/author indexes. Create custom type of indexes e.g. places, objects, etc.
+
+;Code and demo
+For learning plugin features, syntax, tutorial and examples see the plugin demo and code pages
+
+* Demo: https://kookma.github.io/TW-Indexer/
+* Code: https://github.com/kookma/TW-Indexer
