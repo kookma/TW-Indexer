@@ -1,7 +1,8 @@
 caption: Subject Index
 created: 20220121103605827
-modified: 20220121133633788
-tags: $:/tags/SideBar $:/tags/AdvancedSearch
+list-after: $:/core/ui/SideBar/More
+modified: 20220121160922995
+tags: $:/tags/SideBar
 title: $:/plugins/kookma/indexer/ui/subject-index
 type: text/vnd.tiddlywiki
 

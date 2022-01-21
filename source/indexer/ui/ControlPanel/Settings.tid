@@ -1,7 +1,7 @@
 caption: Indexer
 created: 20220106214308574
 list-after: $:/core/ui/ControlPanel/Settings/TiddlyWiki
-modified: 20220121132437062
+modified: 20220121153106527
 tags: $:/tags/ControlPanel/SettingsTab $:/tags/MoreSideBar
 title: $:/plugins/kookma/indexer/ui/ControlPanel/Settings
 type: text/vnd.tiddlywiki
@@ -20,7 +20,7 @@ These settings let you customise the behaviour of Search in Fields plugin.
 
 ; Enable live preview
 :<$checkbox tiddler="$:/config/Indexer/live-preview" field="text" checked="yes"> Enable live raw text preview</$checkbox>
-:<$checkbox tiddler="$:/config/Indexer/live-preview" field="info" checked="yes"> Enable more information</$checkbox>
+:<$checkbox tiddler="$:/config/Indexer/live-preview" field="moreinfo" checked="yes"> Enable more information</$checkbox>
 
 ;List of index entries (categories)
 :<$list 

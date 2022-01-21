@@ -1,5 +1,5 @@
 created: 20220121103438093
-modified: 20220121133214531
+modified: 20220121173117578
 tags: show-content
 title: $:/plugins/kookma/indexer/macros/index
 type: text/vnd.tiddlywiki
@@ -11,12 +11,12 @@ type: text/vnd.tiddlywiki
   cond         = "[<indexTiddler>get[text]enlist-input[]] +[uppercase[]prefix<currentTiddler>]"
   state        = "$:/temp/indexer/list/$(currentTiddler)$"
   tempTid      = {{{ [<__stateTiddler__>!is[blank]then<state>addsuffix[/$stateTiddler$]else<state>] }}}
-  titlePrefix  = {{{ [<tempTid>get[text]else[::Empty]]}}}
+  titlePrefix  = {{{ [<tempTid>get[text]else[A]]}}}
   listfilter   = "[uppercase[]prefix<titlePrefix>]"
   selStyle     = "[<currentTiddler>match<titlePrefix>then[font-weight:bold;]]"
 	
-	livepreviewTid = "$:/config/Indexer/live-preview"
-	sfilter        = "[all[tiddlers]!is[system]] +$scope$ +[search:$fields$:words<currentTiddler>]"
+  livepreviewTid = "$:/config/Indexer/live-preview"
+  sfilter        = "[all[tiddlers]!is[system]] +$scope$ +[search:$fields$:words<currentTiddler>]"
 
 >
 <div class="kk-indexer-container">
@@ -38,7 +38,10 @@ type: text/vnd.tiddlywiki
 <dl class="kk-indexer-list">
 <dt><$text text=<<currentTiddler>> /></dt>
 <$list filter=<<sfilter>> >
-<dd><span title={{{[<livepreviewTid>get[text]match[yes]then{!!text}] }}}><$link/></span></dd>
+<dd>
+<span title={{{ [<livepreviewTid>get[text]match[yes]then{!!text}] }}}><$link/></span>
+<span style={{{[<livepreviewTid>get[moreinfo]match[yes]then[font-size:small;font-style:italic;]else[display:none]] }}}><<moreinformation>></span>
+</dd>
 </$list>
 </dl>
 
@@ -48,4 +51,10 @@ type: text/vnd.tiddlywiki
 
 </div>
 </$let>
+\end
+
+\define moreinformation()
+<$list filter="[<livepreviewTid>get[moreinfo]match[yes]]" variable=ignore>
+<small>//<$text text={{{ [[$(currentTiddler)$]links[]count[]!match[0]addsuffix[ links]] [[$(currentTiddler)$]backlinks[]count[]!match[0]addsuffix[ backlinks]]  [[$(currentTiddler)$]tags[]count[]!match[0]addsuffix[ tags]] [[$(currentTiddler)$]tagging[]count[]!match[0]addsuffix[ tagging]] +[join[, ]] }}} />//</small>
+</$list>
 \end

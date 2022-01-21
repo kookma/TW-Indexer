@@ -1,9 +1,9 @@
 # Indexer
-[Tiddlywiki](https://tiddlywiki.com/) Indexer: Create subject/author indexes.
+[Tiddlywiki](https://tiddlywiki.com/) Indexer: Create indexes for subject, author, places, objects, etc.
 
-* Indexer have UI to create the index entries like LaTeX
+* Indexer have UI to create the index entries like LaTeX.
 * Indexer then indexes the whole wiki using different categories.
-* Indexer has UI for search in indexes
+* Indexer creates UI for simple access in Sidebar and advanced search
 
 # Tutorial
 * Open the https://kookma.github.io/TW-Indexer/
