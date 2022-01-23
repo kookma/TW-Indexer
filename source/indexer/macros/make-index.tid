@@ -1,0 +1,61 @@
+created: 20220122185750959
+modified: 20220123133345719
+tags: show-content
+title: $:/plugins/kookma/indexer/macros/make-index
+type: text/vnd.tiddlywiki
+
+\define entriesTiddler() $:/indexer/data/$(__entriesTiddler__)$
+\define livepreviewTid() $:/config/Indexer/live-preview
+\define alphabet()       ABCDEFGHIJKLMNOPQRSTUVWXYZ
+
+\define make-index(scope:"[all[tiddlers]!is[system]]", fields:"title,tags,caption", entriesTiddler:"", stateTiddler)
+
+<$let
+  state         = "$:/temp/indexer/list/$(currentTiddler)$"
+  tempTid       = {{{ [<__stateTiddler__>!is[blank]then<state>addsuffix[/$stateTiddler$]else<state>] }}}
+
+  hasEntry      = "[<entriesTiddler>get[text]enlist-input[]] +[uppercase[]prefix<currentTiddler>]"  
+  titlePrefix   = {{{ [<tempTid>get[text]else[A]]}}}
+  letterFilter  = "[uppercase[]prefix<titlePrefix>]"
+  outputFilter  = "[all[tiddlers]!is[system]] +$scope$ +[search:$fields$:words<currentTiddler>]"
+
+  selStyle      = "[<currentTiddler>match<titlePrefix>then[font-weight:bold;]]"
+>
+
+<div class="kk-indexer-container">
+<!-- create header -->
+<aside>
+  <$list filter="[<alphabet>split[]filter<hasEntry>]"><!--show only letters have an entry in entriesTiddler -->
+    <$list filter="[<entriesTiddler>get[text]enlist-input[]prefix<currentTiddler>] :filter[subfilter<outputFilter>limit[1]] +[limit[1]]" variable=null>
+      <$button class="tc-btn-invisible kk-indexer-btn">
+        <span style={{{[subfilter<selStyle>]}}} ><$text text=<<currentTiddler>> /></span>
+        <$action-setfield $tiddler=<<tempTid>> text=<<currentTiddler>> />
+      </$button>
+    </$list>
+  </$list>
+</aside>
+
+<!-- generate output -->
+<article>
+  <$list filter="[<entriesTiddler>get[text]enlist-input[]sort[title]]  :filter[subfilter<letterFilter>] :filter[subfilter<outputFilter>limit[1]]" >
+    <dl class="kk-indexer-list">
+      <dt><$text text=<<currentTiddler>> /></dt>
+      <$list filter=<<outputFilter>> >
+        <dd>
+          <span title={{{ [<livepreviewTid>get[text]match[yes]then{!!text}] }}}><$link/></span>
+          <span class="kk-indexer-info"><<moreInformation>></span>
+        </dd>
+      </$list>
+    </dl>
+  </$list>
+</article>
+
+</div>
+</$let>
+\end
+
+\define moreInformation()
+<$list filter="[<livepreviewTid>get[moreinfo]match[yes]]" variable=ignore>
+<small>//<$text text={{{ [<currentTiddler>links[]count[]!match[0]addsuffix[ links]] [<currentTiddler>backlinks[]count[]!match[0]addsuffix[ backlinks]] [<currentTiddler>tags[]count[]!match[0]addsuffix[ tags]] [<currentTiddler>tagging[]count[]!match[0]addsuffix[ tagging]] +[join[, ]] }}} />//</small>
+</$list>
+\end

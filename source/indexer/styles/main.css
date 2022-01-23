@@ -42,3 +42,9 @@
 .kk-indexer-list dd{
 	margin-left:20px;
 }
+
+/* more information style */
+.kk-indexer-info {
+	font-size:small;
+	font-style:italic;
+}

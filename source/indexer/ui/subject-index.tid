@@ -1,19 +1,17 @@
 caption: Subject Index
 created: 20220121103605827
 list-after: $:/core/ui/SideBar/More
-modified: 20220121160922995
+modified: 20220123143904900
 tags: $:/tags/SideBar
 title: $:/plugins/kookma/indexer/ui/subject-index
 type: text/vnd.tiddlywiki
 
-\import [[$:/plugins/kookma/indexer/macros/index]]
-<$tiddler tiddler="$:/plugins/kookma/indexer/ui/subject-index" >
+\import $:/plugins/kookma/indexer/macros/make-index
 <$macrocall 
-  $name="wiki-indexer" 
+  $name="make-index" 
 	fields="title, tags, caption, text"
-	indexEntries="$:/indexer/data/subject"
+	entriesTiddler="subject"
 />
-</$tiddler>
 
 <small>
 [[Edit index entries|$:/plugins/kookma/indexer/ui/subject-entries]]

@@ -1,13 +1,13 @@
 created: 20220121050157198
 hide-body: yes
-modified: 20220121124924633
+modified: 20220123131954931
 tags: show-content
 title: $:/plugins/kookma/indexer/macros/add-entries
 type: text/vnd.tiddlywiki
 
-\define indexBaseTid()  $:/indexer/data/$(currentTiddler)$
-\define tempSelectTid() $:/temp/indexer/$(currentTiddler)$
-\define alphabet()      ABCDEFGHIJKLMNOPQRSTUVWXYZ
+\define entriesTiddler() $:/indexer/data/$(currentTiddler)$
+\define tempSelectTid()  $:/temp/indexer/$(currentTiddler)$
+\define alphabet()       ABCDEFGHIJKLMNOPQRSTUVWXYZ
 
 \define loadEntries() 
 <!-- load the selected index-entries tiddler into tempSelectTid -->
@@ -16,14 +16,14 @@ type: text/vnd.tiddlywiki
 <$list filter="[<letter>!match[*all]]" variable=ignore><!-- load entries per specified letter -->
 <$action-setfield 
     $tiddler=<<tempSelectTid>> 
-		text= {{{ [<indexBaseTid>get[text]enlist-input[]] :filter[prefix<letter>] +[format:titlelist[]join[ ]]}}}
+		text= {{{ [<entriesTiddler>get[text]enlist-input[]] :filter[prefix<letter>] +[format:titlelist[]join[ ]]}}}
 />
 </$list>
 
 <$list filter="[<letter>match[*all]]" variable=ignore><!-- load all entries at once -->
 <$action-setfield 
     $tiddler=<<tempSelectTid>> 
-		text= {{{ [<indexBaseTid>get[text]] }}}
+		text= {{{ [<entriesTiddler>get[text]] }}}
 />
 </$list>
 
@@ -33,32 +33,32 @@ type: text/vnd.tiddlywiki
 \define saveAction()
 <!-- save back to the selected index-entries tiddler from tempSelectTid -->
 
-<$list filter="[<indexBaseTid>!is[tiddler]]" variable=ignore><!-- create the index-entries tiddler if not existed -->
-    <$action-setfield $tiddler =<<indexBaseTid>> type="text/plain" tags="$:/tags/Indexer/Entries"/>
+<$list filter="[<entriesTiddler>!is[tiddler]]" variable=ignore><!-- create the index-entries tiddler if not existed -->
+    <$action-setfield $tiddler =<<entriesTiddler>> type="text/plain" tags="$:/tags/Indexer/Entries"/>
 </$list>
 
 <$list filter="[<targetLetter>!match[*all]]" variable=ignore><!-- save entries per specified letter -->
 <$action-setfield 
-    $tiddler = <<indexBaseTid>>
-    text     = {{{ [<tempSelectTid>get[text]enlist-input[]sentencecase[]prefix<targetLetter>] [<indexBaseTid>get[text]enlist-input[]!prefix<targetLetter>] +[sort[title]format:titlelist[]unique[]join[ ]] }}}
+    $tiddler = <<entriesTiddler>>
+    text     = {{{ [<tempSelectTid>get[text]enlist-input[]sentencecase[]prefix<targetLetter>] [<entriesTiddler>get[text]enlist-input[]!prefix<targetLetter>] +[sort[title]format:titlelist[]unique[]join[ ]] }}}
 />
 </$list>
 
 <$list filter="[<targetLetter>match[*all]]" variable=ignore><!-- save all entries at once -->
 <$action-setfield 
-    $tiddler = <<indexBaseTid>>
+    $tiddler = <<entriesTiddler>>
     text     = {{{ [<tempSelectTid>get[text]enlist-input[]sentencecase[]] +[sort[title]format:titlelist[]unique[]join[ ]] }}}
 />
 </$list>
 
-<<loadEntries>> <!-- reload saved entries -->
+<<loadEntries>> <!-- reload saved entries after each save-->
 \end
 
-\define bracket() [
+\define lbracket() [
 
 \define validateEntries()
 <!-- warn user about invalid entries -->
-<$list filter="[<tempSelectTid>get[text]enlist-input[]] :filter[split[]first[]sentencecase[]!match<targetLetter>!match<bracket>] +[join[, ]] :filter[<targetLetter>!match[*all]]">
+<$list filter="[<tempSelectTid>get[text]enlist-input[]] :filter[split[]first[]sentencecase[]!match<targetLetter>!match<lbracket>] +[join[, ]] :filter[<targetLetter>!match[*all]]">
 
 ''Invalid entries'': //<$text text=<<currentTiddler>>/>//<br>
 
@@ -77,7 +77,7 @@ type: text/vnd.tiddlywiki
 
 <!-- create the editor -->
 <$let targetLetter   = {{{ [<tempSelectTid>get[letter]] :else[[A]] }}} 
-      defaultEntries = {{{ [<indexBaseTid>get[text]enlist-input[]prefix<targetLetter>format:titlelist[]join[ ]] }}}
+      defaultEntries = {{{ [<entriesTiddler>get[text]enlist-input[]prefix<targetLetter>format:titlelist[]join[ ]] }}}
 >
 
 <$edit-text tiddler=<<tempSelectTid>> field=text default=<<defaultEntries>>    placeholder="" class="kk-indexer-edit"/>

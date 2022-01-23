@@ -1,12 +1,12 @@
 caption: Indexer
 created: 20220106214308574
 list-after: $:/core/ui/ControlPanel/Settings/TiddlyWiki
-modified: 20220121153106527
+modified: 20220123140312704
 tags: $:/tags/ControlPanel/SettingsTab $:/tags/MoreSideBar
 title: $:/plugins/kookma/indexer/ui/ControlPanel/Settings
 type: text/vnd.tiddlywiki
 
-These settings let you customise the behaviour of Search in Fields plugin.
+These settings let you customise the behaviour of Indexer plugin.
 
 ---
 
