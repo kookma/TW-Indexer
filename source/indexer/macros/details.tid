@@ -1,0 +1,12 @@
+created: 20220125063241749
+modified: 20220125063515690
+tags: show-content
+title: $:/plugins/kookma/indexer/macros/details
+type: text/vnd.tiddlywiki
+
+\define idxDetails(title"", content:"", status:"")
+<details $status$>
+<summary>$title$</summary>
+$content$
+</details>
+\end

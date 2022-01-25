@@ -29,7 +29,17 @@
 	cursor:pointer;
 	width:2em;
 	height:1.5em;
-	color:navy;	
+}
+
+/* btn to navigate to top */
+.kk-indexer-locator svg{
+	height:1em;
+	fill:unset;
+	margin-top:10px;
+	opacity:0.2;
+}
+.kk-indexer-container aside:hover .kk-indexer-locator svg{
+	opacity:1;
 }
 
 /* definition list ui/index */

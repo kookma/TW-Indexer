@@ -1,5 +1,5 @@
-created: 20220122185750959
-modified: 20220123133345719
+created: 20220125063623256
+modified: 20220125070206563
 tags: show-content
 title: $:/plugins/kookma/indexer/macros/make-index
 type: text/vnd.tiddlywiki
@@ -17,7 +17,7 @@ type: text/vnd.tiddlywiki
   hasEntry      = "[<entriesTiddler>get[text]enlist-input[]] +[uppercase[]prefix<currentTiddler>]"  
   titlePrefix   = {{{ [<tempTid>get[text]else[A]]}}}
   letterFilter  = "[uppercase[]prefix<titlePrefix>]"
-  outputFilter  = "[all[tiddlers]!is[system]] +$scope$ +[search:$fields$:words<currentTiddler>]"
+  outputFilter  = "$scope$ +[search:$fields$:literal<currentTiddler>]"
 
   selStyle      = "[<currentTiddler>match<titlePrefix>then[font-weight:bold;]]"
 >
@@ -33,10 +33,12 @@ type: text/vnd.tiddlywiki
       </$button>
     </$list>
   </$list>
+	<!-- back to top of list -->
+	<a href=<<qualify "##indexer-top-of-list">> class="kk-indexer-locator" title="back to top">{{$:/core/images/fold-button}}</a>
 </aside>
 
 <!-- generate output -->
-<article>
+<article id=<<qualify "#indexer-top-of-list">> ><!-- anchor at top of list -->
   <$list filter="[<entriesTiddler>get[text]enlist-input[]sort[title]]  :filter[subfilter<letterFilter>] :filter[subfilter<outputFilter>limit[1]]" >
     <dl class="kk-indexer-list">
       <dt><$text text=<<currentTiddler>> /></dt>
